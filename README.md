@@ -20,10 +20,19 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
-## Contributing
+## Development
 
-1. Fork it ( https://github.com/[my-github-username]/xcode-result-bundle-processor/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+If you have RVM and change to the working directory, you'll be prompted to install the needed Ruby version if you
+don't already have it. RVM will also handle creating a gemset.
+
+To update the dependencies, run
+
+    bundle
+    
+To run tests, run
+
+    bundle exec rake test
+    
+To execute the tool, run
+
+    bundle exec xcode-result-bundle-processor

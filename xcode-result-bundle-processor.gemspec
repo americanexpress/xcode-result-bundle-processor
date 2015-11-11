@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency('rake', '~> 10.4')
   spec.add_development_dependency('rdoc', '~> 4.2')
   spec.add_development_dependency('aruba', '~> 0.10')
-  spec.add_development_dependency('test-unit', '~> 3.1')
+  spec.add_development_dependency('rspec', '~> 3.3')
 
   spec.add_dependency('methadone', '~> 1.9.2')
   spec.add_dependency('plist4r', '~> 1.2')

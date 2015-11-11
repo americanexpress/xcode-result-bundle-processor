@@ -16,14 +16,8 @@ class App
     plist = Plist4r.open(results_bundle_pathname.join('Info.plist').to_s)
     plist.Actions.each do |action|
       log_pathname = results_bundle_pathname.join(action["ActionResult"]["LogPath"])
-      Zlib::GzipReader.open(log_pathname) do |gz|
-        gz.each_byte do |byte|
-          if byte.chr == "\r"
-            print "\n"
-          else
-            print byte.chr
-          end
-        end
+      File.open(log_pathname) do |log_file|
+        print Xcode::Result::Bundle::Processor.xcactivitylog_to_string(log_file).to_s
       end
     end
 

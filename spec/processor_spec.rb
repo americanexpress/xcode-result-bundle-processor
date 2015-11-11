@@ -1,16 +1,16 @@
 require 'xcoderesultbundleprocessor/processor.rb'
 
 RSpec.describe XcodeResultBundleProcessor, '#xcactivitylog_to_string' do
-  it 'gunzips the provided string' do
-    string = "I'm a pretend log statement that logs things"
+  it 'converts the given SLF0 file' do
+    string = "SLF04\"Foo\n"
 
-    XcodeResultBundleProcessor.xcactivitylog_to_string(gzip_string(string)).should == string
+    expect(XcodeResultBundleProcessor.xcactivitylog_to_string(gzip_string(string))).to eq("Foo\n")
   end
 
-  it 'converts mac newlines to regular newlines' do
-    string = "One line\rTwo line"
+  it 'appends a newline if no trailing newline' do
+    string = "SLF04\"Foo"
 
-    XcodeResultBundleProcessor.xcactivitylog_to_string(gzip_string(string)).should == "One line\nTwo line"
+    expect(XcodeResultBundleProcessor.xcactivitylog_to_string(gzip_string(string))).to eq("Foo\n")
   end
 
   def gzip_string(string)

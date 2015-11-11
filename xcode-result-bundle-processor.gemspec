@@ -25,4 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency('test-unit', '~> 3.1')
 
   spec.add_dependency('methadone', '~> 1.9.2')
+  spec.add_dependency('plist4r', '~> 1.2')
 end

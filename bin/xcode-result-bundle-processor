@@ -3,7 +3,7 @@
 require 'optparse'
 require 'methadone'
 require 'plist4r'
-require 'xcode/result/bundle/processor.rb'
+require 'xcoderesultbundleprocessor/processor.rb'
 
 class App
   include Methadone::Main
@@ -17,7 +17,7 @@ class App
     plist.Actions.each do |action|
       log_pathname = results_bundle_pathname.join(action["ActionResult"]["LogPath"])
       File.open(log_pathname) do |log_file|
-        print Xcode::Result::Bundle::Processor.xcactivitylog_to_string(log_file).to_s
+        print XcodeResultBundleProcessor.xcactivitylog_to_string(log_file).to_s
       end
     end
 
@@ -28,7 +28,7 @@ class App
   description 'Creates friendly report from Xcode results bundle'
   arg :results_bundle_path
 
-  version Xcode::Result::Bundle::Processor::VERSION
+  version XcodeResultBundleProcessor::VERSION
 
   use_log_level_option :toggle_debug_on_signal => 'USR1'
 

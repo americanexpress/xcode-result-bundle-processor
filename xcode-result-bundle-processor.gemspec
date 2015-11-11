@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'xcode/result/bundle/processor/version'
+require 'xcoderesultbundleprocessor/version'
 
 Gem::Specification.new do |spec|
   spec.name        = 'xcode-result-bundle-processor'
-  spec.version     = Xcode::Result::Bundle::Processor::VERSION
+  spec.version     = XcodeResultBundleProcessor::VERSION
   spec.authors     = ['Manuel Wudka-Robles']
   spec.email       = ['mwudka@me.com']
   spec.summary     = %q{TODO: Write a short summary. Required.}

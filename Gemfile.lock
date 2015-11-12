@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     xcode-result-bundle-processor (0.0.1)
+      awesome_print (~> 1.6)
       methadone (~> 1.9.2)
       plist4r (~> 1.2)
 
@@ -15,6 +16,7 @@ GEM
       ffi (~> 1.9.10)
       rspec-expectations (>= 2.99)
       thor (~> 0.19)
+    awesome_print (1.6.1)
     builder (3.2.2)
     childprocess (0.5.7)
       ffi (~> 1.0, >= 1.0.11)

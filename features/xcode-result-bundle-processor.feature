@@ -19,3 +19,9 @@ Feature: My bootstrapped app kinda works
     Then the output should contain all of these lines:
       |t =     0.00s     Start Test|
       |t =    18.51s     Tear Down|
+
+  Scenario: Tarballed results bundle path
+    When I successfully process "results_bundle_path.tar.gz"
+    Then the output should contain all of these lines:
+      |t =     0.00s     Start Test|
+      |t =    18.51s     Tear Down|

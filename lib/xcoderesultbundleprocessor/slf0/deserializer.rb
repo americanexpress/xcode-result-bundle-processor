@@ -1,11 +1,3 @@
-require 'methadone'
-require 'awesome_print'
-require 'xcoderesultbundleprocessor/slf0/model/ideactivitylogsection'
-require 'xcoderesultbundleprocessor/slf0/model/ideactivitylogunittestsection'
-require 'xcoderesultbundleprocessor/slf0/model/ideactivitylogmessage'
-require 'xcoderesultbundleprocessor/slf0/model/dvtdocumentlocation'
-require 'xcoderesultbundleprocessor/slf0/model/dvttextdocumentlocation'
-
 module XcodeResultBundleProcessor
   module SLF0
     module Deserializer

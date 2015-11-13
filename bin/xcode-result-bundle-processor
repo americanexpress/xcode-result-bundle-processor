@@ -2,12 +2,7 @@
 
 require 'optparse'
 require 'methadone'
-require 'plist4r'
-require 'awesome_print'
-require 'xcoderesultbundleprocessor/slf0/tokenizer'
-require 'xcoderesultbundleprocessor/slf0/class_name_resolver'
-require 'xcoderesultbundleprocessor/slf0/deserializer'
-require 'xcoderesultbundleprocessor/activity_log_formatter'
+require 'xcoderesultbundleprocessor'
 
 class App
   include Methadone::Main
@@ -16,30 +11,8 @@ class App
   main do |results_bundle_path|
     change_logger(Methadone::CLILogger.new(STDERR, STDERR))
 
-    info "Preparing report for results bundle path at #{results_bundle_path}"
-
-    results_bundle_pathname = Pathname.new(results_bundle_path)
-    plist                   = Plist4r.open(results_bundle_pathname.join('Info.plist').to_s)
-    plist.Actions.each do |action|
-      log_pathname = results_bundle_pathname.join(action["ActionResult"]["LogPath"])
-      File.open(log_pathname) do |log_file|
-        io     = Zlib::GzipReader.new(log_file)
-        tokens = XcodeResultBundleProcessor::SLF0::Tokenizer.read_token_stream(io)
-        tokens = XcodeResultBundleProcessor::SLF0::ClassNameResolver.resolve_class_names(tokens).to_a
-
-        # SLF0 files have a random int at the beginning; don't know its significance
-        tokens.shift
-
-        section = XcodeResultBundleProcessor::SLF0::Deserializer.deserialize(tokens)
-        debug section.ai
-
-        print XcodeResultBundleProcessor::ActivityLogFormatter.format(section.subsections.first)
-      end
-    end
-
-    plist.close
+    XcodeResultBundleProcessor::ReportGenerator.generate_report(results_bundle_path)
   end
-
 
   description 'Creates friendly report from Xcode results bundle'
   arg :results_bundle_path

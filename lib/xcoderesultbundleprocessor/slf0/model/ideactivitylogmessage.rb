@@ -1,5 +1,3 @@
-require 'xcoderesultbundleprocessor/keyword_struct'
-
 module XcodeResultBundleProcessor
   module SLF0
     module Model

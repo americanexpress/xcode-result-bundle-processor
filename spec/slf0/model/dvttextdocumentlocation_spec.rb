@@ -1,5 +1,3 @@
-require 'xcoderesultbundleprocessor/slf0/model/dvttextdocumentlocation'
-
 module XcodeResultBundleProcessor
   module SLF0
     module Model

@@ -16,6 +16,10 @@ module XcodeResultBundleProcessor
         expect(ActivityLogFormatter.format(section)).to eq(expected)
       end
 
+      it 'returns newline for nil' do
+        expect(ActivityLogFormatter.format(nil)).to eq("\n")
+      end
+
     end
   end
 end

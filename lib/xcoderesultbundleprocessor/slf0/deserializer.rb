@@ -1,4 +1,5 @@
 require 'methadone'
+require 'awesome_print'
 require 'xcoderesultbundleprocessor/slf0/model/ideactivitylogsection'
 require 'xcoderesultbundleprocessor/slf0/model/ideactivitylogunittestsection'
 require 'xcoderesultbundleprocessor/slf0/model/ideactivitylogmessage'
@@ -11,6 +12,8 @@ module XcodeResultBundleProcessor
       include Methadone::CLILogging
 
       def self.deserialize(tokens)
+        debug "Deserializing #{tokens.ai}"
+
         if tokens.first.nil?
           tokens.shift
           return nil

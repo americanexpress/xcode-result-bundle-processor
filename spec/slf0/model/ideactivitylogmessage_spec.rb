@@ -1,5 +1,3 @@
-require 'xcoderesultbundleprocessor/slf0/model/ideactivitylogmessage'
-
 module XcodeResultBundleProcessor
   module SLF0
     module Model

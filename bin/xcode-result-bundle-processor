@@ -1,15 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'rubygems/package'
 require 'optparse'
 require 'methadone'
-require 'plist4r'
-require 'awesome_print'
-require 'xcoderesultbundleprocessor/slf0/tokenizer'
-require 'xcoderesultbundleprocessor/slf0/class_name_resolver'
-require 'xcoderesultbundleprocessor/slf0/deserializer'
-require 'xcoderesultbundleprocessor/activity_log_formatter'
-require 'xcoderesultbundleprocessor/report_generator'
+require 'xcoderesultbundleprocessor'
 
 class App
   include Methadone::Main

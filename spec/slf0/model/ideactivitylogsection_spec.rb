@@ -1,6 +1,3 @@
-require 'xcoderesultbundleprocessor/slf0/model/ideactivitylogsection'
-
-
 module XcodeResultBundleProcessor
   module SLF0
     module Model

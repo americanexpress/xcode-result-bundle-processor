@@ -1,5 +1,3 @@
-require 'xcoderesultbundleprocessor/activity_log_formatter'
-
 module XcodeResultBundleProcessor
   RSpec.describe ActivityLogFormatter do
     describe '#format' do

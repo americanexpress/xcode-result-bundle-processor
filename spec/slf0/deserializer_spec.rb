@@ -1,5 +1,3 @@
-require 'xcoderesultbundleprocessor/slf0/deserializer'
-
 module XcodeResultBundleProcessor
   module SLF0
 

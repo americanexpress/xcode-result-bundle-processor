@@ -1,5 +1,3 @@
-require 'xcoderesultbundleprocessor/slf0/class_name_resolver.rb'
-
 module XcodeResultBundleProcessor
   module SLF0
     RSpec.describe ClassNameResolver do

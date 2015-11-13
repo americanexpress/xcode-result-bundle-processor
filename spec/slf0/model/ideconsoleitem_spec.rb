@@ -1,5 +1,3 @@
-require 'xcoderesultbundleprocessor/slf0/model/ideconsoleitem'
-
 module XcodeResultBundleProcessor
   module SLF0
     module Model

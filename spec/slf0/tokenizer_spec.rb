@@ -1,5 +1,3 @@
-require 'xcoderesultbundleprocessor/slf0/tokenizer'
-
 module XcodeResultBundleProcessor
   module SLF0
     RSpec.describe Tokenizer do

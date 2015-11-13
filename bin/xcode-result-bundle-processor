@@ -4,9 +4,9 @@ require 'optparse'
 require 'methadone'
 require 'plist4r'
 require 'awesome_print'
-require 'xcoderesultbundleprocessor/slf0_tokenizer'
-require 'xcoderesultbundleprocessor/class_name_resolver'
-require 'xcoderesultbundleprocessor/slf0_deserializer'
+require 'xcoderesultbundleprocessor/slf0/tokenizer'
+require 'xcoderesultbundleprocessor/slf0/class_name_resolver'
+require 'xcoderesultbundleprocessor/slf0/deserializer'
 require 'xcoderesultbundleprocessor/activity_log_formatter'
 
 class App
@@ -24,13 +24,13 @@ class App
       log_pathname = results_bundle_pathname.join(action["ActionResult"]["LogPath"])
       File.open(log_pathname) do |log_file|
         io     = Zlib::GzipReader.new(log_file)
-        tokens = XcodeResultBundleProcessor::SLF0Tokenizer.read_token_stream(io)
-        tokens = XcodeResultBundleProcessor::ClassNameResolver.resolve_class_names(tokens).to_a
+        tokens = XcodeResultBundleProcessor::SLF0::Tokenizer.read_token_stream(io)
+        tokens = XcodeResultBundleProcessor::SLF0::ClassNameResolver.resolve_class_names(tokens).to_a
 
         # SLF0 files have a random int at the beginning; don't know its significance
         tokens.shift
 
-        section = XcodeResultBundleProcessor::SLF0Deserializer.deserialize(tokens)
+        section = XcodeResultBundleProcessor::SLF0::Deserializer.deserialize(tokens)
         debug section.ai
 
         print XcodeResultBundleProcessor::ActivityLogFormatter.format(section.subsections.first)

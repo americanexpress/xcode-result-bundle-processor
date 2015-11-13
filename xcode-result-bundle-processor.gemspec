@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'xcode/result/bundle/processor/version'
+require 'xcoderesultbundleprocessor/version'
 
 Gem::Specification.new do |spec|
   spec.name        = 'xcode-result-bundle-processor'
-  spec.version     = Xcode::Result::Bundle::Processor::VERSION
+  spec.version     = XcodeResultBundleProcessor::VERSION
   spec.authors     = ['Manuel Wudka-Robles']
   spec.email       = ['mwudka@me.com']
   spec.summary     = %q{TODO: Write a short summary. Required.}
@@ -22,7 +22,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency('rake', '~> 10.4')
   spec.add_development_dependency('rdoc', '~> 4.2')
   spec.add_development_dependency('aruba', '~> 0.10')
-  spec.add_development_dependency('test-unit', '~> 3.1')
+  spec.add_development_dependency('rspec', '~> 3.3')
 
   spec.add_dependency('methadone', '~> 1.9.2')
+  spec.add_dependency('plist4r', '~> 1.2')
+  spec.add_dependency('awesome_print', '~> 1.6')
 end

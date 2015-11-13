@@ -2,40 +2,49 @@
 
 require 'optparse'
 require 'methadone'
-require 'xcode/result/bundle/processor.rb'
+require 'plist4r'
+require 'awesome_print'
+require 'xcoderesultbundleprocessor/slf0/tokenizer'
+require 'xcoderesultbundleprocessor/slf0/class_name_resolver'
+require 'xcoderesultbundleprocessor/slf0/deserializer'
+require 'xcoderesultbundleprocessor/activity_log_formatter'
 
 class App
   include Methadone::Main
   include Methadone::CLILogging
 
-  main do # Add args you want: |like,so|
-    # your program code here
-    # You can access CLI options via
-    # the options Hash
+  main do |results_bundle_path|
+    change_logger(Methadone::CLILogger.new(STDERR, STDERR))
+
+    info "Preparing report for results bundle path at #{results_bundle_path}"
+
+    results_bundle_pathname = Pathname.new(results_bundle_path)
+    plist                   = Plist4r.open(results_bundle_pathname.join('Info.plist').to_s)
+    plist.Actions.each do |action|
+      log_pathname = results_bundle_pathname.join(action["ActionResult"]["LogPath"])
+      File.open(log_pathname) do |log_file|
+        io     = Zlib::GzipReader.new(log_file)
+        tokens = XcodeResultBundleProcessor::SLF0::Tokenizer.read_token_stream(io)
+        tokens = XcodeResultBundleProcessor::SLF0::ClassNameResolver.resolve_class_names(tokens).to_a
+
+        # SLF0 files have a random int at the beginning; don't know its significance
+        tokens.shift
+
+        section = XcodeResultBundleProcessor::SLF0::Deserializer.deserialize(tokens)
+        debug section.ai
+
+        print XcodeResultBundleProcessor::ActivityLogFormatter.format(section.subsections.first)
+      end
+    end
+
+    plist.close
   end
 
-  # supplemental methods here
 
-  # Declare command-line interface here
+  description 'Creates friendly report from Xcode results bundle'
+  arg :results_bundle_path
 
-  # description "one line description of your app"
-  #
-  # Accept flags via:
-  # on("--flag VAL","Some flag")
-  # options[flag] will contain VAL
-  #
-  # Specify switches via:
-  # on("--[no-]switch","Some switch")
-  #
-  # Or, just call OptionParser methods on opts
-  #
-  # Require an argument
-  # arg :some_arg 
-  #
-  # # Make an argument optional
-  # arg :optional_arg, :optional
-
-  version Xcode::Result::Bundle::Processor::VERSION
+  version XcodeResultBundleProcessor::VERSION
 
   use_log_level_option :toggle_debug_on_signal => 'USR1'
 

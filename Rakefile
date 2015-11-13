@@ -26,7 +26,7 @@ end
 require 'bundler'
 require 'rake/clean'
 
-require 'rake/testtask'
+require 'rspec/core/rake_task'
 
 require 'cucumber'
 require 'cucumber/rake/task'
@@ -37,11 +37,7 @@ include Rake::DSL
 
 Bundler::GemHelper.install_tasks
 
-
-Rake::TestTask.new do |t|
-  t.pattern = 'test/tc_*.rb'
-end
-
+RSpec::Core::RakeTask.new(:spec)
 
 CUKE_RESULTS = 'results.html'
 CLEAN << CUKE_RESULTS
@@ -57,5 +53,5 @@ Rake::RDocTask.new do |rd|
   rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
 end
 
-task :default => [:test,:features]
+task :default => [:spec, :features]
 

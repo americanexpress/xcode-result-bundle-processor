@@ -2,7 +2,9 @@ PATH
   remote: .
   specs:
     xcode-result-bundle-processor (0.0.1)
+      awesome_print (~> 1.6)
       methadone (~> 1.9.2)
+      plist4r (~> 1.2)
 
 GEM
   remote: https://rubygems.org/
@@ -14,6 +16,7 @@ GEM
       ffi (~> 1.9.10)
       rspec-expectations (>= 2.99)
       thor (~> 0.19)
+    awesome_print (1.6.1)
     builder (3.2.2)
     childprocess (0.5.7)
       ffi (~> 1.0, >= 1.0.11)
@@ -30,20 +33,36 @@ GEM
     diff-lcs (1.2.5)
     ffi (1.9.10)
     gherkin3 (3.1.2)
+    haml (4.0.7)
+      tilt
+    libxml-ruby (2.8.0)
+    libxml4r (0.2.6)
+      libxml-ruby (>= 1.1.3)
     methadone (1.9.2)
       bundler
     multi_json (1.11.2)
     multi_test (0.1.2)
-    power_assert (0.2.6)
+    plist4r (1.2.2)
+      haml
+      libxml-ruby
+      libxml4r
     rake (10.4.2)
     rdoc (4.2.0)
+    rspec (3.3.0)
+      rspec-core (~> 3.3.0)
+      rspec-expectations (~> 3.3.0)
+      rspec-mocks (~> 3.3.0)
+    rspec-core (3.3.2)
+      rspec-support (~> 3.3.0)
     rspec-expectations (3.3.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.3.0)
+    rspec-mocks (3.3.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
     rspec-support (3.3.0)
-    test-unit (3.1.5)
-      power_assert
     thor (0.19.1)
+    tilt (2.0.1)
 
 PLATFORMS
   ruby
@@ -53,7 +72,7 @@ DEPENDENCIES
   bundler (~> 1.6)
   rake (~> 10.4)
   rdoc (~> 4.2)
-  test-unit (~> 3.1)
+  rspec (~> 3.3)
   xcode-result-bundle-processor!
 
 BUNDLED WITH

@@ -37,7 +37,7 @@ module XcodeResultBundleProcessor
                     }
                 ]
             }
-        ]})
+        ]}, )
 
         expect(actual).to eq(expected)
       end
@@ -76,13 +76,14 @@ module XcodeResultBundleProcessor
             '  Failure at somefile:1234',
             '    Line one of failure',
             '    Line two of failure'
-        ].join("\n")
+        ].join("\n") + "\n"
 
+        buffer = IndentedStringBuffer.new
         actual = TestSummariesFormatter._format_failure_summary({
                                                                     'FileName'   => 'somefile',
                                                                     'LineNumber' => 1234,
                                                                     'Message'    => "Line one of failure\nLine two of failure"
-                                                                }, 2)
+                                                                }, 1, buffer)
 
         expect(actual).to eq(expected)
       end
@@ -90,10 +91,11 @@ module XcodeResultBundleProcessor
 
     describe '#_format_activity_summary' do
       it 'displays summary' do
-        actual = TestSummariesFormatter._format_activity_summary({
+        buffer = IndentedStringBuffer.new
+        actual                 = TestSummariesFormatter._format_activity_summary({
                                                                     'Title' => 'TheTitle'
-                                                                }, 2)
-        expect(actual).to eq('  TheTitle')
+                                                                }, 1, buffer)
+        expect(actual).to eq("  TheTitle\n")
       end
     end
   end

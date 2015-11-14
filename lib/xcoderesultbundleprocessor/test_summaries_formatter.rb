@@ -7,41 +7,44 @@ module XcodeResultBundleProcessor
 
       raise "FormatVersion is unsupported: <#{test_summaries['FormatVersion']}>" unless test_summaries['FormatVersion'] == '1.1'
 
-      (test_summaries['TestableSummaries'] || []).map { |testable_summary| self._format_testable_summary(testable_summary) }.join("\n") + "\n"
+      buffer = IndentedStringBuffer.new
+
+      (test_summaries['TestableSummaries'] || []).each { |testable_summary| self._format_testable_summary(testable_summary, buffer) }
+
+      buffer.to_s
     end
 
     private
 
-    def self._format_testable_summary(testable_summary)
-      "#{testable_summary['TestName']} in #{testable_summary['ProjectPath']}\n" << (testable_summary['Tests'] || []).map { |test| self._format_test(test, 2) }.join("\n")
+    def self._format_testable_summary(testable_summary, buffer)
+      buffer.add_line("#{testable_summary['TestName']} in #{testable_summary['ProjectPath']}\n", 0)
+      (testable_summary['Tests'] || []).each { |test| self._format_test(test, 1, buffer) }.join("\n")
     end
 
-    def self._format_test(test, indent)
-      summary = ' '*indent << test['TestIdentifier']
+    def self._format_test(test, indent, buffer)
+      summary = test['TestIdentifier']
       summary << ' ' << test['TestStatus'] unless test['TestStatus'].nil?
-      lines = [summary]
-      lines += (test['FailureSummaries'] || []).map { |failure_summary| self._format_failure_summary(failure_summary, indent + 2) }
+      buffer.add_line(summary, indent)
+      (test['FailureSummaries'] || []).each { |failure_summary| self._format_failure_summary(failure_summary, indent + 1, buffer) }
 
       unless test['ActivitySummaries'].nil?
-        lines << (' '*(indent + 2) << 'Timeline:')
-        lines += test['ActivitySummaries'].map { |activity_summary| self._format_activity_summary(activity_summary, indent + 4) }
+        buffer.add_line('Timeline:', indent + 1)
+
+        test['ActivitySummaries'].each { |activity_summary| self._format_activity_summary(activity_summary, indent + 2, buffer) }
 
       end
 
-      lines += (test['Subtests'] || []).map { |subtest| self._format_test(subtest, indent + 2) }
-      lines.join("\n")
+      (test['Subtests'] || []).each { |subtest| self._format_test(subtest, indent + 1, buffer) }
+      buffer
     end
 
-    def self._format_failure_summary(failure_summary, indent)
-      lines = [' ' * indent << "Failure at #{failure_summary['FileName']}:#{failure_summary['LineNumber']}\n"]
-
-      lines += failure_summary['Message'].each_line.map { |line| ' ' * (indent + 2) << line }
-
-      lines.join
+    def self._format_failure_summary(failure_summary, indent, buffer)
+      buffer.add_line("Failure at #{failure_summary['FileName']}:#{failure_summary['LineNumber']}\n", indent)
+      buffer.add_lines(failure_summary['Message'].each_line, indent + 1)
     end
 
-    def self._format_activity_summary(activity_summary, indent)
-      ' ' * indent << activity_summary['Title']
+    def self._format_activity_summary(activity_summary, indent, buffer)
+      buffer.add_line(activity_summary['Title'], indent)
     end
   end
 end

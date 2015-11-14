@@ -4,6 +4,7 @@ require 'awesome_print'
 require 'methadone'
 
 require 'xcoderesultbundleprocessor/keyword_struct'
+require 'xcoderesultbundleprocessor/indented_string_buffer'
 require 'xcoderesultbundleprocessor/slf0/tokenizer'
 require 'xcoderesultbundleprocessor/slf0/class_name_resolver'
 require 'xcoderesultbundleprocessor/slf0/deserializer'

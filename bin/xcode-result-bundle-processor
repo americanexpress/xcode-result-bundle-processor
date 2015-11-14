@@ -11,7 +11,19 @@ class App
   main do |results_bundle_path|
     change_logger(Methadone::CLILogger.new(STDERR, STDERR))
 
-    XcodeResultBundleProcessor::ReportGenerator.generate_report(results_bundle_path)
+    info "Preparing report for results bundle path at #{results_bundle_path}"
+
+    results_bundle = if File.directory?(results_bundle_path)
+                       XcodeResultBundleProcessor::DirectoryResultsBundle.new(results_bundle_path)
+                     else
+                       XcodeResultBundleProcessor::TarballResultsBundle.new(results_bundle_path)
+                     end
+
+    XcodeResultBundleProcessor::ReportGenerator.generate_report(results_bundle)
+
+    test_summaries = results_bundle.read_plist('TestSummaries.plist')
+    print XcodeResultBundleProcessor::TestSummariesFormatter.format(test_summaries)
+
   end
 
   description 'Creates friendly report from Xcode results bundle'

@@ -83,7 +83,7 @@ module XcodeResultBundleProcessor
                                                                     'FileName'   => 'somefile',
                                                                     'LineNumber' => 1234,
                                                                     'Message'    => "Line one of failure\nLine two of failure"
-                                                                }, 1, buffer)
+                                                                }, buffer.indent)
 
         expect(actual).to eq(expected)
       end
@@ -94,7 +94,7 @@ module XcodeResultBundleProcessor
         buffer = IndentedStringBuffer.new
         actual                 = TestSummariesFormatter._format_activity_summary({
                                                                     'Title' => 'TheTitle'
-                                                                }, 1, buffer)
+                                                                }, buffer.indent)
         expect(actual).to eq("  TheTitle\n")
       end
     end

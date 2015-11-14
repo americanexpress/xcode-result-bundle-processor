@@ -16,8 +16,8 @@ module XcodeResultBundleProcessor
       # get the full log
       section = section.subsections.first
 
-      buffer.add_line(section.title)
-      buffer.add_lines(section.text.each_line)
+      buffer << section.title << section.text.each_line
+      buffer.to_s
     end
   end
 end

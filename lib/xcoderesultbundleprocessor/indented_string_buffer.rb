@@ -6,19 +6,18 @@ module XcodeResultBundleProcessor
       @indent_level  = indent_level
     end
 
-    def add_line(line)
-      @buffer << ' ' * (@indent_spaces * @indent_level) << line
-      @buffer << "\n" unless line.end_with?("\n")
-      @buffer
-    end
-
-    def add_lines(lines)
-      lines.each { |line| self.add_line(line) }
-      @buffer
+    def <<(arg)
+      Array(arg).each do |line|
+        @buffer << ' ' * (@indent_spaces * @indent_level) << line
+        @buffer << "\n" unless line.end_with?("\n")
+        @buffer
+      end
+      self
     end
 
     def add_newline
       @buffer << "\n"
+      self
     end
 
     def indent

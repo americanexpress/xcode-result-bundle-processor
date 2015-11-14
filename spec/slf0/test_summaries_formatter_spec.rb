@@ -79,23 +79,23 @@ module XcodeResultBundleProcessor
         ].join("\n") + "\n"
 
         buffer = IndentedStringBuffer.new
-        actual = TestSummariesFormatter._format_failure_summary({
+        TestSummariesFormatter._format_failure_summary({
                                                                     'FileName'   => 'somefile',
                                                                     'LineNumber' => 1234,
                                                                     'Message'    => "Line one of failure\nLine two of failure"
                                                                 }, buffer.indent)
 
-        expect(actual).to eq(expected)
+        expect(buffer.to_s).to eq(expected)
       end
     end
 
     describe '#_format_activity_summary' do
       it 'displays summary' do
         buffer = IndentedStringBuffer.new
-        actual                 = TestSummariesFormatter._format_activity_summary({
+        TestSummariesFormatter._format_activity_summary({
                                                                     'Title' => 'TheTitle'
                                                                 }, buffer.indent)
-        expect(actual).to eq("  TheTitle\n")
+        expect(buffer.to_s).to eq("  TheTitle\n")
       end
     end
   end

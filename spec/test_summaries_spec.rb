@@ -168,5 +168,30 @@ module XcodeResultBundleProcessor
         expect(activity.screenshot_path).to be_nil
       end
     end
+
+    describe TestSummaries::TestResult do
+      describe '#summary' do
+        it 'indicates success' do
+          test_result = TestSummaries::TestResult.new(identifier: 'TheID', passed?: true)
+
+          expect(test_result.summary).to eq('TheID Passed')
+        end
+
+        it 'indicates failure' do
+          test_result = TestSummaries::TestResult.new(identifier: 'TheID', passed?: false)
+
+          expect(test_result.summary).to eq('TheID Failed')
+        end
+      end
+    end
+
+    describe TestSummaries::FailureSummary do
+      describe '#location' do
+        it 'combines file and line' do
+          failure_summary = TestSummaries::FailureSummary.new(file_name: 'somefile', line_number: 123)
+          expect(failure_summary.location).to eq('somefile:123')
+        end
+      end
+    end
   end
 end

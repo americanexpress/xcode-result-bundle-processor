@@ -9,6 +9,14 @@ module XcodeResultBundleProcessor
             activities:        Array(test_result['ActivitySummaries']).map { |activity_summary| Activity.parse(activity_summary) }
         )
       end
+
+      def summary
+        identifier << ' ' << if passed?
+                               'Passed'
+                             else
+                               'Failed'
+                             end
+      end
     end
 
     class FailureSummary < KeywordStruct.new(:file_name, :line_number, :message)
@@ -18,6 +26,10 @@ module XcodeResultBundleProcessor
             line_number: failure_summary['LineNumber'],
             message:     failure_summary['Message']
         )
+      end
+
+      def location
+        "#{file_name}:#{line_number}"
       end
     end
 

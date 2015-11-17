@@ -24,8 +24,7 @@ class App
 
     XcodeResultBundleProcessor::ReportGenerator.generate_report(results_bundle)
 
-    test_summaries = results_bundle.read_plist('TestSummaries.plist')
-    print XcodeResultBundleProcessor::TestSummariesFormatter.format(test_summaries)
+    print XcodeResultBundleProcessor::TestSummariesFormatter.format(results_bundle)
   end
 
   description 'Creates friendly report from Xcode results bundle'

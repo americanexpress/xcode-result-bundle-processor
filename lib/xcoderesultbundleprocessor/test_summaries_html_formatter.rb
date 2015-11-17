@@ -36,19 +36,12 @@ module XcodeResultBundleProcessor
     end
 
     def _format_test(test, mab, destination_dir)
-      status = if test.passed?
-                 'Passed'
-               else
-                 'Failed'
-               end
-
-      mab.h2 test.identifier << ' ' << status
-
+      mab.h2 test.summary
 
       mab.ul do
         test.failure_summaries.each do |failure_summary|
           li do
-            em "Failure at #{failure_summary.file_name}:#{failure_summary.line_number}\n"
+            em "Failure at #{failure_summary.location}"
             pre failure_summary.message
           end
         end

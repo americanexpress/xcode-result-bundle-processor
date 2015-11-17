@@ -1,5 +1,5 @@
 module XcodeResultBundleProcessor
-  class TestSummaries
+  module TestSummaries
     class TestResult < KeywordStruct.new(:identifier, :passed?, :failure_summaries, :activities)
       def self.parse(test_result)
         TestResult.new(
@@ -44,27 +44,29 @@ module XcodeResultBundleProcessor
         Activity.new(
             title:           activity_summary['Title'],
             screenshot_path: screenshot_path,
-            subactivities:   Array(activity_summary['SubActivities']).map { |activity_summary| Activity.parse(activity_summary) }
+            subactivities:   Array(activity_summary['SubActivities']).map { |subactivity| Activity.parse(subactivity) }
         )
       end
     end
 
-    attr_reader :tests
+    class TestSummaries
+      attr_reader :tests
 
-    def initialize(test_summaries)
-      raise "FormatVersion is unsupported: <#{test_summaries['FormatVersion']}>" unless test_summaries['FormatVersion'] == '1.1'
+      def initialize(test_summaries)
+        raise "FormatVersion is unsupported: <#{test_summaries['FormatVersion']}>" unless test_summaries['FormatVersion'] == '1.1'
 
-      @tests = Array(test_summaries['TestableSummaries']).map do |testable_summary|
-        Array(testable_summary['Tests']).map { |test| self._parse_test(test) }
-      end.flatten.compact
-    end
+        @tests = Array(test_summaries['TestableSummaries']).map do |testable_summary|
+          Array(testable_summary['Tests']).map { |test| self._parse_test(test) }
+        end.flatten.compact
+      end
 
-    def _parse_test(test)
-      subtests = Array(test['Subtests'])
-      if subtests.empty?
-        TestResult.parse(test)
-      else
-        subtests.map { |subtest| self._parse_test(subtest) }
+      def _parse_test(test)
+        subtests = Array(test['Subtests'])
+        if subtests.empty?
+          TestResult.parse(test)
+        else
+          subtests.map { |subtest| self._parse_test(subtest) }
+        end
       end
     end
   end

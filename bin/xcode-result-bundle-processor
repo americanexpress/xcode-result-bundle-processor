@@ -19,12 +19,12 @@ class App
                      end
 
     unless options['save-html-report'].nil?
-      XcodeResultBundleProcessor::TestSummariesHTMLFormatter.new(results_bundle).save_html_report(options['save-html-report'])
+      XcodeResultBundleProcessor::TestSummaries::HTMLReport.new(results_bundle).save(options['save-html-report'])
     end
 
     XcodeResultBundleProcessor::ReportGenerator.generate_report(results_bundle)
 
-    print XcodeResultBundleProcessor::TestSummariesFormatter.format(results_bundle)
+    print XcodeResultBundleProcessor::TestSummaries::TextReport.format(results_bundle)
   end
 
   description 'Creates friendly report from Xcode results bundle'

@@ -10,6 +10,9 @@ module XcodeResultBundleProcessor
 
       def save(destination_dir)
         info "Saving HTML report to #{destination_dir}"
+
+        raise "Destination directory #{destination_dir} already exists" if Dir.exists?(destination_dir)
+
         FileUtils.mkdir_p(File.join(destination_dir, 'screenshots'))
 
         tests = TestSummaries.new(@results_bundle.read_plist('TestSummaries.plist'))

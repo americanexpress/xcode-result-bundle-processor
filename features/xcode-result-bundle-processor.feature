@@ -10,20 +10,22 @@ Feature: Basic result bundle processing
       | --version |
     And the banner should document that this app's arguments are:
       | results_bundle_path | which is required |
+    And the following options should be documented:
+      | save-html-report |
 
   Scenario: Processing directory result bundle
     When I successfully process "results_bundle_path"
     Then the output should contain all of these lines:
-      | t =     0.00s     Start Test                                       |
-      | t =    18.51s     Tear Down                                        |
-      | CM4954_Validate_Attempt_Login_With_Invalid_Password/test() Success |
-      | Check predicate `exists == 0` against object `ActivityIndicator`   |
+      | t =     0.00s     Start Test                                      |
+      | t =    18.51s     Tear Down                                       |
+      | CM4954_Validate_Attempt_Login_With_Invalid_Password/test() Passed |
+      | Check predicate `exists == 0` against object `ActivityIndicator`  |
 
   Scenario: Processing tarballed results bundle path
     When I successfully process "results_bundle_path.tar.gz"
     Then the output should contain all of these lines:
-      | t =     0.00s     Start Test                                       |
-      | t =    18.51s     Tear Down                                        |
-      | CM4954_Validate_Attempt_Login_With_Invalid_Password/test() Success |
-      | Check predicate `exists == 0` against object `ActivityIndicator`   |
+      | t =     0.00s     Start Test                                      |
+      | t =    18.51s     Tear Down                                       |
+      | CM4954_Validate_Attempt_Login_With_Invalid_Password/test() Passed |
+      | Check predicate `exists == 0` against object `ActivityIndicator`  |
 

@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
-require 'methadone'
 require 'xcoderesultbundleprocessor'
 
 class App
@@ -19,15 +18,18 @@ class App
                        XcodeResultBundleProcessor::TarballResultsBundle.new(results_bundle_path)
                      end
 
+    unless options['save-html-report'].nil?
+      XcodeResultBundleProcessor::TestSummaries::HTMLReport.new(results_bundle).save(options['save-html-report'])
+    end
+
     XcodeResultBundleProcessor::ReportGenerator.generate_report(results_bundle)
 
-    test_summaries = results_bundle.read_plist('TestSummaries.plist')
-    print XcodeResultBundleProcessor::TestSummariesFormatter.format(test_summaries)
-
+    print XcodeResultBundleProcessor::TestSummaries::TextReport.format(results_bundle)
   end
 
   description 'Creates friendly report from Xcode results bundle'
   arg :results_bundle_path
+  on('--save-html-report [report output dir]', 'Save a test result HTML report to given directory')
 
   version XcodeResultBundleProcessor::VERSION
 

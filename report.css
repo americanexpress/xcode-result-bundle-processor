@@ -1,0 +1,32 @@
+table {
+    border-collapse: collapse;
+    top: 4em;
+}
+
+.timelineContainer {
+    overflow-x: scroll;
+}
+
+pre {
+    overflow-x: scroll;
+}
+
+td {
+    vertical-align: top;
+    padding: 20px;
+    border: 1px solid black;
+}
+
+@keyframes grow-image {
+    from {
+        width: 200px;
+    }
+
+    to {
+        width: initial;
+    }
+}
+
+img {
+    width: 250px;
+}

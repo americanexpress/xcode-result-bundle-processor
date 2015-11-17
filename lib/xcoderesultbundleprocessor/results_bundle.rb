@@ -16,6 +16,10 @@ module XcodeResultBundleProcessor
     def open_file(path, &block)
       File.open(@path.join(path), &block)
     end
+
+    def copy_file(source, destination)
+      FileUtils.copy(@path.join(source), destination)
+    end
   end
 
   class TarballResultsBundle
@@ -33,6 +37,14 @@ module XcodeResultBundleProcessor
 
     def open_file(path, &block)
       @tar.seek("./#{path}", &block)
+    end
+
+    def copy_file(source, destination)
+      @tar.seek("./#{source}") do |source_entry|
+        File.open(destination, 'w') do |destination_file|
+          destination_file.write(source_entry.read)
+        end
+      end
     end
   end
 end

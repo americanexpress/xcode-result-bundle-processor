@@ -3,6 +3,7 @@ PATH
   specs:
     xcode-result-bundle-processor (0.0.1)
       awesome_print (~> 1.6)
+      markaby (~> 0.8)
       methadone (~> 1.9.2)
       plist4r (~> 1.2)
 
@@ -38,6 +39,8 @@ GEM
     libxml-ruby (2.8.0)
     libxml4r (0.2.6)
       libxml-ruby (>= 1.1.3)
+    markaby (0.8.0)
+      builder
     methadone (1.9.2)
       bundler
     multi_json (1.11.2)

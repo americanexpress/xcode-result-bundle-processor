@@ -10,6 +10,8 @@ Feature: Basic result bundle processing
       | --version |
     And the banner should document that this app's arguments are:
       | results_bundle_path | which is required |
+    And the following options should be documented:
+      | save-html-report |
 
   Scenario: Processing directory result bundle
     When I successfully process "results_bundle_path"

@@ -15,6 +15,11 @@ module XcodeResultBundleProcessor
 
         FileUtils.mkdir_p(File.join(destination_dir, 'screenshots'))
 
+        info 'Deserializing logs'
+        action_logs = LogDeserializer.deserialize_action_logs(@results_bundle)
+        debug action_logs
+
+
         tests = TestSummaries.new(@results_bundle.read_plist('TestSummaries.plist'))
 
         debug "Formatting test summaries <#{tests.ai}>"
@@ -31,6 +36,12 @@ module XcodeResultBundleProcessor
             tests.tests.each do |test|
               _format_test(test, mab, destination_dir)
             end
+
+            hr
+
+            h1 'Action Logs'
+            pre action_logs
+
           end
         end
 

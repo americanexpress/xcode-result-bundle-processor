@@ -11,11 +11,11 @@ module XcodeResultBundleProcessor
       end
 
       def summary
-        identifier << ' ' << if passed?
-                               'Passed'
-                             else
-                               'Failed'
-                             end
+        identifier + ' ' + if passed?
+                             'Passed'
+                           else
+                             'Failed'
+                           end
       end
     end
 
@@ -58,6 +58,10 @@ module XcodeResultBundleProcessor
         @tests = Array(test_summaries['TestableSummaries']).map do |testable_summary|
           Array(testable_summary['Tests']).map { |test| self._parse_test(test) }
         end.flatten.compact
+      end
+
+      def failed_tests
+        tests.find_all { |test| !test.passed? }
       end
 
       def _parse_test(test)

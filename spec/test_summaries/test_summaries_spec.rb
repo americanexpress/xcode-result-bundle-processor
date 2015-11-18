@@ -1,6 +1,13 @@
 module XcodeResultBundleProcessor
   module TestSummaries
     describe TestSummaries do
+      def make_test_summaries(testable_summaries=nil)
+        {
+            'FormatVersion'     => '1.1',
+            'TestableSummaries' => testable_summaries
+        }
+      end
+
       describe '#initialize' do
         it 'raises for unsupported FormatVersion' do
           expect { TestSummaries.new({'FormatVersion' => '2.0'}) }.to raise_error 'FormatVersion is unsupported: <2.0>'
@@ -9,84 +16,102 @@ module XcodeResultBundleProcessor
 
       describe '#tests' do
         it 'returns empty array for nil TestableSummaries' do
-          expect(TestSummaries.new({'FormatVersion' => '1.1'}).tests).to eq([])
+          expect(TestSummaries.new(make_test_summaries).tests).to eq([])
         end
 
 
         it 'collapses nested subtests' do
-          test_summaries = {
-              'FormatVersion'     => '1.1',
-              'TestableSummaries' => [
-                  {
-                      'Tests' => [
-                          {'Subtests' => [
-                              {'TestIdentifier' => 'Test 1'},
-                              {'TestIdentifier' => 'Test 2'},
-                          ]},
-                          {'Subtests' => [
-                              {'TestIdentifier' => 'Test 3'},
-                              {'TestIdentifier' => 'Test 4'},
-                          ]},
-                      ]
-                  },
-                  {
-                      'Tests' => [
-                          {'Subtests' => [
-                              {'TestIdentifier' => 'Test 5'},
-                              {'TestIdentifier' => 'Test 6'},
-                          ]},
-                          {'Subtests' => [
-                              {'TestIdentifier' => 'Test 7'},
-                              {
-                                  'Subtests' => [
-                                      {'TestIdentifier' => 'Test 8'}
-                                  ]},
-                          ]},
-                      ]
-                  }
-              ]
-          }
+          test_summaries = make_test_summaries([
+                                                   {
+                                                       'Tests' => [
+                                                           {'Subtests' => [
+                                                               {'TestIdentifier' => 'Test 1'},
+                                                               {'TestIdentifier' => 'Test 2'},
+                                                           ]},
+                                                           {'Subtests' => [
+                                                               {'TestIdentifier' => 'Test 3'},
+                                                               {'TestIdentifier' => 'Test 4'},
+                                                           ]},
+                                                       ]
+                                                   },
+                                                   {
+                                                       'Tests' => [
+                                                           {'Subtests' => [
+                                                               {'TestIdentifier' => 'Test 5'},
+                                                               {'TestIdentifier' => 'Test 6'},
+                                                           ]},
+                                                           {'Subtests' => [
+                                                               {'TestIdentifier' => 'Test 7'},
+                                                               {
+                                                                   'Subtests' => [
+                                                                       {'TestIdentifier' => 'Test 8'}
+                                                                   ]},
+                                                           ]},
+                                                       ]
+                                                   }
+                                               ])
+
 
           expect(TestSummaries.new(test_summaries).tests.map(&:identifier)).to eq(['Test 1', 'Test 2', 'Test 3', 'Test 4', 'Test 5', 'Test 6', 'Test 7', 'Test 8'])
         end
       end
 
+      describe '#failed_tests' do
+        it 'returns empty if no failed tests' do
+          test_summaries = make_test_summaries([
+                                                   {'Tests' => [
+                                                       {'TestIdentifier' => 'Passed', 'TestStatus' => 'Success'}
+                                                   ]}
+                                               ])
+
+          expect(TestSummaries.new(test_summaries).failed_tests).to eq([])
+        end
+
+        it 'returns only failed tests' do
+          test_summaries = make_test_summaries([
+                                                   {'Tests' => [
+                                                       {'TestIdentifier' => 'Fail1', 'TestStatus' => 'Failure'},
+                                                       {'TestIdentifier' => 'Passed', 'TestStatus' => 'Success'},
+                                                       {'TestIdentifier' => 'Fail2', 'TestStatus' => 'Failure'}
+                                                   ]}
+                                               ])
+          expect(TestSummaries.new(test_summaries).failed_tests.map(&:identifier)).to eq(%w(Fail1 Fail2))
+        end
+      end
+
       describe 'individual test' do
-        def make_test_summaries(test={})
-          {
-              'FormatVersion'     => '1.1',
-              'TestableSummaries' => [
-                  {
-                      'Tests' => [
-                          {
-                              'Subtests' => [
-                                  {'TestIdentifier' => 'Test 1'}.merge(test),
-                              ]
-                          }
-                      ]
-                  }
-              ]
-          }
+        def make_test_summaries_for_test(test={})
+          make_test_summaries([
+                                  {
+                                      'Tests' => [
+                                          {
+                                              'Subtests' => [
+                                                  {'TestIdentifier' => 'Test 1'}.merge(test),
+                                              ]
+                                          }
+                                      ]
+                                  }
+                              ])
         end
 
         it 'detects passed test' do
-          test_summaries = make_test_summaries('TestStatus' => 'Success')
+          test_summaries = make_test_summaries_for_test('TestStatus' => 'Success')
 
           expect(TestSummaries.new(test_summaries).tests.first.passed?).to be_truthy
         end
 
         it 'treats nil failure summaries as empty array' do
-          expect(TestSummaries.new(make_test_summaries).tests.first.failure_summaries).to eq([])
+          expect(TestSummaries.new(make_test_summaries_for_test).tests.first.failure_summaries).to eq([])
         end
 
         it 'detects failed test' do
-          test_summaries = make_test_summaries('TestStatus' => 'Failure')
+          test_summaries = make_test_summaries_for_test('TestStatus' => 'Failure')
 
           expect(TestSummaries.new(test_summaries).tests.first.passed?).to be_falsey
         end
 
         it 'includes failure summaries' do
-          test_summaries = make_test_summaries('FailureSummaries' => [
+          test_summaries = make_test_summaries_for_test('FailureSummaries' => [
               {'FileName' => 'file1', 'LineNumber' => 1234, 'Message' => 'Message1'},
               {'FileName' => 'file2', 'LineNumber' => 5678, 'Message' => 'Message2'},
           ])
@@ -103,11 +128,11 @@ module XcodeResultBundleProcessor
         end
 
         it 'treats nil activity summaries as empty array' do
-          expect(TestSummaries.new(make_test_summaries).tests.first.activities).to eq([])
+          expect(TestSummaries.new(make_test_summaries_for_test).tests.first.activities).to eq([])
         end
 
         it 'includes activity summaries' do
-          test_summaries = make_test_summaries('ActivitySummaries' => [
+          test_summaries = make_test_summaries_for_test('ActivitySummaries' => [
               {'Title' => 'Activity 1'},
               {'Title' => 'Activity 2'},
           ])
@@ -117,14 +142,14 @@ module XcodeResultBundleProcessor
         end
 
         it 'returns empty array for nil subactivities' do
-          test_summaries = make_test_summaries('ActivitySummaries' => [{}])
+          test_summaries = make_test_summaries_for_test('ActivitySummaries' => [{}])
 
           test = TestSummaries.new(test_summaries).tests.first
           expect(test.activities.first.subactivities).to eq([])
         end
 
         it 'includes nested subactivities' do
-          test_summaries = make_test_summaries('ActivitySummaries' => [
+          test_summaries = make_test_summaries_for_test('ActivitySummaries' => [
               {'SubActivities' => [
                   {'SubActivities' => [
                       {'Title' => 'Activity 1.1'},
@@ -147,7 +172,7 @@ module XcodeResultBundleProcessor
         end
 
         it 'includes subactivity screenshot if present' do
-          test_summaries = make_test_summaries('ActivitySummaries' => [
+          test_summaries = make_test_summaries_for_test('ActivitySummaries' => [
               {'Attachments' => [
                   {'Name' => 'ElementsOfInterest', 'FileName' => 'elements'},
                   {'Name' => 'Screenshot', 'FileName' => 'screenie'},
@@ -159,7 +184,7 @@ module XcodeResultBundleProcessor
         end
 
         it 'has nil for screenshot if not present' do
-          test_summaries = make_test_summaries('ActivitySummaries' => [
+          test_summaries = make_test_summaries_for_test('ActivitySummaries' => [
               {'Attachments' => [
                   {'Name' => 'ElementsOfInterest', 'FileName' => 'elements'},
               ]},

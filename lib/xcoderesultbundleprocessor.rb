@@ -1,8 +1,9 @@
 require 'rubygems/package'
-require 'plist4r'
+require 'cfpropertylist'
 require 'awesome_print'
 require 'methadone'
 require 'markaby'
+require 'optparse'
 
 require 'xcoderesultbundleprocessor/keyword_struct'
 require 'xcoderesultbundleprocessor/indented_string_buffer'

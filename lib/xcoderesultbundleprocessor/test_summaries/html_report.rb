@@ -33,6 +33,20 @@ module XcodeResultBundleProcessor
           end
 
           body do
+            unless tests.failed_tests.empty?
+              h1 'Failed Tests :('
+              ul do
+                tests.failed_tests.each do |failed_test|
+                  li do
+                    a href: "##{failed_test.identifier}" do
+                      failed_test.identifier
+                    end
+                  end
+                end
+              end
+            end
+
+            h1 'Test Timelines'
             tests.tests.each do |test|
               _format_test(test, mab, destination_dir)
             end
@@ -51,7 +65,13 @@ module XcodeResultBundleProcessor
       end
 
       def _format_test(test, mab, destination_dir)
-        mab.h2 test.summary
+        mab.a name: test.identifier do
+          if test.passed?
+            mab.h2 test.summary
+          else
+            mab.h2.testFailed test.summary
+          end
+        end
 
         mab.ul do
           test.failure_summaries.each do |failure_summary|

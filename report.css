@@ -30,3 +30,7 @@ td {
 img {
     width: 250px;
 }
+
+.testFailed {
+    color: #ff6600;
+}

@@ -25,13 +25,13 @@ module XcodeResultBundleProcessor
       if cfdictionary.value.key?('NS.keys') && cfdictionary.value.key?('NS.objects')
         keys_and_values = cfdictionary.value['NS.keys'].value.zip(cfdictionary.value['NS.objects'].value)
         keys_and_values.each do |key, value|
-          ret[self._deserialize_object(key)] = self._deserialize_object(value)
+          ret[self._deserialize_object(key).to_s.to_sym] = self._deserialize_object(value)
         end
       elsif cfdictionary.value.key?('NS.objects')
         return cfdictionary.value['NS.objects'].value.map { |o| self._deserialize_object(o) }
       else
         cfdictionary.value.each do |key, value|
-          ret[key] = self._deserialize_object(value)
+          ret[key.to_sym] = self._deserialize_object(value)
         end
 
       end

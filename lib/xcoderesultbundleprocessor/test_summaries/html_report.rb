@@ -61,7 +61,6 @@ module XcodeResultBundleProcessor
 
         FileUtils.copy(@stylesheet_path, File.join(destination_dir, 'report.css'))
         File.open(File.join(destination_dir, 'index.html'), 'w').write(report)
-
       end
 
       def _format_test(test, mab, destination_dir)
@@ -104,6 +103,19 @@ module XcodeResultBundleProcessor
 
                             img src: File.join('screenshots', basename)
                           end
+
+                          unless subactivity.snapshot_path.nil?
+                            @results_bundle.open_file(File.join('Attachments', subactivity.snapshot_path)) do |file|
+                              snapshot_plist   = CFPropertyList::List.new(data: file.read)
+                              element_snapshot = ElementSnapshot.new(snapshot_plist)
+
+                              snapshot_summary = SnapshotSummary.parse(element_snapshot.to_h)
+
+                              _format_element_summary(mab, snapshot_summary)
+                            end
+                          end
+
+                          ''
                         end
                       end
                       ''
@@ -116,6 +128,19 @@ module XcodeResultBundleProcessor
           end
         end
         ''
+      end
+
+      def _format_element_summary(mab, element_summary)
+        mab.ul do
+          mab.li do
+            span element_summary.summary
+
+            element_summary.children.each do |child|
+              _format_element_summary(mab, child)
+            end
+            ''
+          end
+        end
       end
     end
   end

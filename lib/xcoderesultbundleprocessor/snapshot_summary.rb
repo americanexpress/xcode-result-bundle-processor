@@ -3,8 +3,8 @@ module XcodeResultBundleProcessor
 
     def self.parse(element_snapshot)
       element_class = nil
-      if element_snapshot.key?(:additionalAttributes) and element_snapshot[:additionalAttributes].key?(5004)
-        element_class = element_snapshot[:additionalAttributes][5004]
+      if element_snapshot.key?(:additionalAttributes) and element_snapshot[:additionalAttributes].key?(5004.to_s.to_sym)
+        element_class = element_snapshot[:additionalAttributes][5004.to_s.to_sym]
       end
 
       SnapshotSummary.new(
@@ -24,14 +24,14 @@ module XcodeResultBundleProcessor
 
     end
 
-    def to_s
+    def summary
       summary_components = [
           self.element_class || 'UnknownElement',
           self.frame
       ]
 
       summary_components += [:identifier, :title, :label, :value, :placeholder].map do |attribute|
-        unless self[attribute].nil?
+        unless self[attribute].nil? or self[attribute].empty?
           "#{attribute}=#{self[attribute]}"
         end
       end

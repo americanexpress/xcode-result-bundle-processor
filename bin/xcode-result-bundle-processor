@@ -22,9 +22,8 @@ class App
       XcodeResultBundleProcessor::TestSummaries::HTMLReport.new(results_bundle).save(options['save-html-report'])
     end
 
-    XcodeResultBundleProcessor::ReportGenerator.generate_report(results_bundle)
-
-    print XcodeResultBundleProcessor::TestSummaries::TextReport.format(results_bundle)
+    debug XcodeResultBundleProcessor::TestSummaries::TextReport.format(results_bundle)
+    info 'Success!'
   end
 
   description 'Creates friendly report from Xcode results bundle'

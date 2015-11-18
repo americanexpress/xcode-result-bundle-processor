@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'xcoderesultbundleprocessor'
 
 RSpec.configure do |config|

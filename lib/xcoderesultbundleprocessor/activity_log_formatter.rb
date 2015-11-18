@@ -1,6 +1,3 @@
-require 'awesome_print'
-require 'methadone'
-
 module XcodeResultBundleProcessor
   module ActivityLogFormatter
     include Methadone::CLILogging

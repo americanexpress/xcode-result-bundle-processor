@@ -1,8 +1,3 @@
-require 'rubygems/package'
-require 'methadone'
-require 'plist4r'
-require 'awesome_print'
-
 module XcodeResultBundleProcessor
   class DirectoryResultsBundle
     def initialize(path)

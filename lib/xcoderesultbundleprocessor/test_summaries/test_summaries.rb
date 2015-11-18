@@ -33,7 +33,7 @@ module XcodeResultBundleProcessor
       end
     end
 
-    class Activity < KeywordStruct.new(:title, :screenshot_path, :subactivities)
+    class Activity < KeywordStruct.new(:title, :screenshot_path, :snapshot_path, :subactivities)
       def self.parse(activity_summary)
         screenshot      = Array(activity_summary['Attachments']).find { |attachment| attachment['Name'] == 'Screenshot' }
         screenshot_path = nil
@@ -41,9 +41,16 @@ module XcodeResultBundleProcessor
           screenshot_path = screenshot['FileName']
         end
 
+        snapshot      = Array(activity_summary['Attachments']).find { |attachment| attachment['Name'] == 'Snapshot' }
+        snapshot_path = nil
+        unless snapshot.nil?
+          snapshot_path = snapshot['FileName']
+        end
+
         Activity.new(
             title:           activity_summary['Title'],
             screenshot_path: screenshot_path,
+            snapshot_path:   snapshot_path,
             subactivities:   Array(activity_summary['SubActivities']).map { |subactivity| Activity.parse(subactivity) }
         )
       end

@@ -193,6 +193,30 @@ module XcodeResultBundleProcessor
           activity = TestSummaries.new(test_summaries).tests.first.activities.first
           expect(activity.screenshot_path).to be_nil
         end
+
+        it 'includes subactivity snapshot if present' do
+          test_summaries = make_test_summaries_for_test('ActivitySummaries' => [
+              {'Attachments' => [
+                  {'Name' => 'ElementsOfInterest', 'FileName' => 'elements'},
+                  {'Name' => 'Snapshot', 'FileName' => 'snapshot'},
+              ]},
+          ])
+
+          activity = TestSummaries.new(test_summaries).tests.first.activities.first
+          expect(activity.snapshot_path).to eq('snapshot')
+        end
+
+        it 'has nil for ansphot if not present' do
+          test_summaries = make_test_summaries_for_test('ActivitySummaries' => [
+              {'Attachments' => [
+                  {'Name' => 'ElementsOfInterest', 'FileName' => 'elements'},
+              ]},
+          ])
+
+          activity = TestSummaries.new(test_summaries).tests.first.activities.first
+          expect(activity.snapshot_path).to be_nil
+        end
+
       end
 
       describe TestResult do

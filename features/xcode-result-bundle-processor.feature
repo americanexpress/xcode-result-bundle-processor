@@ -16,15 +16,12 @@ Feature: Basic result bundle processing
   Scenario: Processing directory result bundle
     When I successfully process "results_bundle_path"
     Then the output should contain all of these lines:
-      | CM4954_Validate_Attempt_Login_With_Invalid_Password/test() Passed |
-      | Check predicate `exists == 0` against object `ActivityIndicator`  |
-      | Success!                                                          |
-
+      | 3 / 4 tests passed |
+      | Success!           |
 
   Scenario: Processing tarballed results bundle path
     When I successfully process "results_bundle_path.tar.gz"
     Then the output should contain all of these lines:
-      | CM4954_Validate_Attempt_Login_With_Invalid_Password/test() Passed |
-      | Check predicate `exists == 0` against object `ActivityIndicator`  |
-      | Success!                                                          |
+      | 3 / 4 tests passed |
+      | Success!           |
 

@@ -10,6 +10,10 @@ module XcodeResultBundleProcessor
 
         test_summaries.tests.each { |test| self._format_test(test, buffer) }
 
+        tests_passed_count = test_summaries.tests.group_by(&:passed?)[true].length
+
+        info "#{tests_passed_count} / #{test_summaries.tests.length} tests passed"
+
         buffer.to_s
       end
 

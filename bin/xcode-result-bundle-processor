@@ -22,7 +22,7 @@ class App
       XcodeResultBundleProcessor::TestSummaries::HTMLReport.new(results_bundle).save(options['save-html-report'])
     end
 
-    info XcodeResultBundleProcessor::TestSummaries::TextReport.format(results_bundle)
+    debug XcodeResultBundleProcessor::TestSummaries::TextReport.format(results_bundle)
     info 'Success!'
   end
 

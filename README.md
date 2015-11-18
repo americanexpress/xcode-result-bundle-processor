@@ -1,6 +1,7 @@
-# Xcode::Result::Bundle::Processor
+# XcodeResultBundleProcessor
 
-TODO: Write a gem description
+This tool converts into Xcode 7's machine-readable results bundle into a human-readable HTML report including
+detailed activity logs and screenshots for UI tests.
 
 ## Installation
 
@@ -18,7 +19,19 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+First, run your UI tests using an invocation like this:
+
+    xcodebuild -workspace MyWorkspace.xcworkspace \
+        -scheme 'My UI Tests' \
+        -sdk iphonesimulator \
+        -resultBundlePath "my_results_bundle" \
+        
+This will put a bunch of mystery files into `my_results_bundle`, which you can transform into un-mystery files
+via
+
+    bundle exec xcode-result-bundle-processor --save-html-report report my_results_bundle 
+    
+The report will appear in `report/index.html`
 
 ## Development
 
@@ -31,7 +44,7 @@ To update the dependencies, run
     
 To run tests, run
 
-    bundle exec rake test
+    bundle exec rake
     
 To execute the tool, run
 

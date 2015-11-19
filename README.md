@@ -45,6 +45,10 @@ To update the dependencies, run
 To run tests, run
 
     bundle exec rake
+
+To build the gem, fun
+    
+    bundle exec rake build
     
 To execute the tool, run
 

@@ -6,6 +6,7 @@ require 'markaby'
 require 'optparse'
 require 'ostruct'
 
+require 'xcoderesultbundleprocessor/version'
 require 'xcoderesultbundleprocessor/keyword_struct'
 require 'xcoderesultbundleprocessor/indented_string_buffer'
 require 'xcoderesultbundleprocessor/slf0/tokenizer'

@@ -5,7 +5,8 @@ module XcodeResultBundleProcessor
 
       def initialize(results_bundle)
         @results_bundle  = results_bundle
-        @stylesheet_path = 'report.css'
+        @stylesheet_path = 'static/report.css'
+        @js_path         = 'static/report.js'
       end
 
       def save(destination_dir)
@@ -30,6 +31,9 @@ module XcodeResultBundleProcessor
         report = mab.html5 do
           head do
             link rel: 'stylesheet', href: 'report.css'
+            script src: 'report.js' do
+              ''
+            end
           end
 
           body do
@@ -60,6 +64,7 @@ module XcodeResultBundleProcessor
         end
 
         FileUtils.copy(@stylesheet_path, File.join(destination_dir, 'report.css'))
+        FileUtils.copy(@js_path, File.join(destination_dir, 'report.js'))
         File.open(File.join(destination_dir, 'index.html'), 'w').write(report)
       end
 
@@ -105,13 +110,20 @@ module XcodeResultBundleProcessor
                           end
 
                           unless subactivity.snapshot_path.nil?
-                            @results_bundle.open_file(File.join('Attachments', subactivity.snapshot_path)) do |file|
-                              snapshot_plist   = CFPropertyList::List.new(data: file.read)
-                              element_snapshot = ElementSnapshot.new(snapshot_plist)
+                            a.viewSnapshot href: '#' do
+                              'View Snapshot'
+                            end
 
-                              snapshot_summary = SnapshotSummary.parse(element_snapshot.to_h)
+                            pre.snapshot do
+                              @results_bundle.open_file(File.join('Attachments', subactivity.snapshot_path)) do |file|
+                                snapshot_plist   = CFPropertyList::List.new(data: file.read)
+                                element_snapshot = ElementSnapshot.new(snapshot_plist)
 
-                              _format_element_summary(mab, snapshot_summary)
+                                snapshot_summary = SnapshotSummary.parse(element_snapshot.to_h)
+
+                                buffer = IndentedStringBuffer.new
+                                _format_element_summary(buffer, snapshot_summary)
+                              end
                             end
                           end
 
@@ -130,17 +142,14 @@ module XcodeResultBundleProcessor
         ''
       end
 
-      def _format_element_summary(mab, element_summary)
-        mab.ul do
-          mab.li do
-            span element_summary.summary
+      def _format_element_summary(buffer, element_summary)
+        buffer << element_summary.summary
 
-            element_summary.children.each do |child|
-              _format_element_summary(mab, child)
-            end
-            ''
-          end
+        element_summary.children.each do |child|
+          _format_element_summary(buffer.indent, child)
         end
+
+        buffer
       end
     end
   end

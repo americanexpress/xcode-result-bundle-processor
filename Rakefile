@@ -46,12 +46,5 @@ Cucumber::Rake::Task.new(:features) do |t|
   t.fork = false
 end
 
-Rake::RDocTask.new do |rd|
-  
-  rd.main = "README.rdoc"
-  
-  rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
-end
-
 task :default => [:spec, :features]
 

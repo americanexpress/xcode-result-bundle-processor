@@ -1,9 +1,3 @@
-require 'rubygems/package'
-require 'methadone'
-require 'plist4r'
-require 'awesome_print'
-
-
 module XcodeResultBundleProcessor
   module LogDeserializer
     include Methadone::CLILogging
@@ -12,7 +6,7 @@ module XcodeResultBundleProcessor
 
       plist = results_bundle.read_plist('Info.plist')
 
-      action       = plist.Actions.first
+      action       = plist['Actions'].first
       log_pathname = action['ActionResult']['LogPath']
       results_bundle.open_file(log_pathname) do |activity_log_io|
         io     = Zlib::GzipReader.new(activity_log_io)

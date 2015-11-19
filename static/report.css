@@ -34,3 +34,7 @@ img {
 .testFailed {
     color: #ff6600;
 }
+
+.snapshot {
+    display: none;
+}

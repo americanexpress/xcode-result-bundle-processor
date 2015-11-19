@@ -1,8 +1,3 @@
-require 'rubygems/package'
-require 'methadone'
-require 'plist4r'
-require 'awesome_print'
-
 module XcodeResultBundleProcessor
   class DirectoryResultsBundle
     def initialize(path)
@@ -10,7 +5,7 @@ module XcodeResultBundleProcessor
     end
 
     def read_plist(path)
-      Plist4r.open(@path.join(path).to_s)
+      CFPropertyList.native_types(CFPropertyList::List.new(file: @path.join(path)).value)
     end
 
     def open_file(path, &block)
@@ -31,7 +26,7 @@ module XcodeResultBundleProcessor
 
     def read_plist(path)
       @tar.seek("./#{path}") do |plist_entry|
-        plist_entry.read.to_plist
+        CFPropertyList.native_types(CFPropertyList::List.new(data: plist_entry.read).value)
       end
     end
 

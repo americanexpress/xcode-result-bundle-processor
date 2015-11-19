@@ -5,8 +5,8 @@ module XcodeResultBundleProcessor
 
       def initialize(results_bundle)
         @results_bundle  = results_bundle
-        @stylesheet_path = 'static/report.css'
-        @js_path         = 'static/report.js'
+        @stylesheet_path = File.join(File.dirname(__FILE__), '..', '..', '..', 'static', 'report.css')
+        @js_path         = File.join(File.dirname(__FILE__), '..', '..', '..', 'static', 'report.js')
       end
 
       def save(destination_dir)

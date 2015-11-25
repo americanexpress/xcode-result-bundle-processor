@@ -1,0 +1,5 @@
+language: ruby
+os: osx
+script:
+  - bundle exec rake
+  - bundle exec rake build

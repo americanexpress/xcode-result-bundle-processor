@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/americanexpress/xcode-result-bundle-processor.svg?branch=master)](https://travis-ci.org/americanexpress/xcode-result-bundle-processor)
+
 # XcodeResultBundleProcessor
 
 This tool converts into Xcode 7's machine-readable results bundle into a human-readable HTML report including
@@ -53,3 +55,15 @@ To build the gem, fun
 To execute the tool, run
 
     bundle exec xcode-result-bundle-processor
+
+## Contributing
+
+Contributing is easy and fun! Some guidelines:
+
+* If you're making a non-trivial change, consider reaching out to Manuel the Maintainer (mwudka@me.com) for an
+ architecture/implementation chat.
+* Create an issue to track your work and describe your goals
+* Branch from master and make your changes in the branch
+* Add tests for any new functionality
+* When you're happy with your changes and the builds pass, open a PR
+* If no one has addressed your PR after a day or two, prod Manuel the Maintainer (mwudka@me.com)

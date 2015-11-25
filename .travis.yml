@@ -3,3 +3,6 @@ os: osx
 script:
   - bundle exec rake
   - bundle exec rake build
+addons:
+  code_climate:
+    repo_token: ab0af39b165f1fd64c05d98119b404f3960343d9b46335de472b7692f1335fb2

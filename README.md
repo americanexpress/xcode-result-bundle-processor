@@ -1,7 +1,8 @@
 [![Build Status](https://travis-ci.org/americanexpress/xcode-result-bundle-processor.svg?branch=master)](https://travis-ci.org/americanexpress/xcode-result-bundle-processor)
 [![Code Climate](https://codeclimate.com/github/americanexpress/xcode-result-bundle-processor/badges/gpa.svg)](https://codeclimate.com/github/americanexpress/xcode-result-bundle-processor)
 [![Test Coverage](https://codeclimate.com/github/americanexpress/xcode-result-bundle-processor/badges/coverage.svg)](https://codeclimate.com/github/americanexpress/xcode-result-bundle-processor/coverage)
-[![Issue Count](https://codeclimate.com/github/americanexpress/xcode-result-bundle-processor/badges/issue_count.svg)](https://codeclimate.com/github/americanexpress/xcode-result-bundle-processor)
+[![Gem Version](https://badge.fury.io/rb/xcode-result-bundle-processor.svg)](https://badge.fury.io/rb/xcode-result-bundle-processor)
+[![Dependency Status](https://www.versioneye.com/user/projects/565629adff016c002c001c2c/badge.svg?style=flat)](https://www.versioneye.com/user/projects/565629adff016c002c001c2c)
 
 # XcodeResultBundleProcessor
 

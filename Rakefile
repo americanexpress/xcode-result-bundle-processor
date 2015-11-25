@@ -2,11 +2,11 @@ def dump_load_path
   puts $LOAD_PATH.join("\n")
   found = nil
   $LOAD_PATH.each do |path|
-    if File.exists?(File.join(path,"rspec"))
+    if File.exist?(File.join(path,"rspec"))
       puts "Found rspec in #{path}"
-      if File.exists?(File.join(path,"rspec","core"))
+      if File.exist?(File.join(path,"rspec","core"))
         puts "Found core"
-        if File.exists?(File.join(path,"rspec","core","rake_task"))
+        if File.exist?(File.join(path,"rspec","core","rake_task"))
           puts "Found rake_task"
           found = path
         else

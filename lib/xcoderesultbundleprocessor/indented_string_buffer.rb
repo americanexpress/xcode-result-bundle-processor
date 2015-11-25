@@ -21,7 +21,7 @@ module XcodeResultBundleProcessor
     end
 
     def indent
-      IndentedStringBuffer.new(buffer=@buffer, indent_level=@indent_level + 1)
+      IndentedStringBuffer.new(@buffer, @indent_level + 1)
     end
 
     def to_s

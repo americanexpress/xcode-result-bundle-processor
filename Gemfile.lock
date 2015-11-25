@@ -22,6 +22,8 @@ GEM
     builder (3.2.2)
     childprocess (0.5.7)
       ffi (~> 1.0, >= 1.0.11)
+    codeclimate-test-reporter (0.4.8)
+      simplecov (>= 0.7.1, < 1.0.0)
     contracts (0.12.0)
     cucumber (2.1.0)
       builder (>= 2.1.2)
@@ -71,10 +73,10 @@ PLATFORMS
 DEPENDENCIES
   aruba (~> 0.10)
   bundler (~> 1.6)
+  codeclimate-test-reporter (~> 0.4)
   rake (~> 10.4)
   rdoc (~> 4.2)
   rspec (~> 3.3)
-  simplecov (~> 0.10)
   xcode-result-bundle-processor!
 
 BUNDLED WITH

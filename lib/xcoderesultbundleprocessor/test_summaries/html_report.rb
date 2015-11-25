@@ -12,7 +12,7 @@ module XcodeResultBundleProcessor
       def save(destination_dir)
         info "Saving HTML report to #{destination_dir}"
 
-        raise "Destination directory #{destination_dir} already exists" if Dir.exists?(destination_dir)
+        raise "Destination directory #{destination_dir} already exists" if Dir.exist?(destination_dir)
 
         FileUtils.mkdir_p(File.join(destination_dir, 'screenshots'))
 

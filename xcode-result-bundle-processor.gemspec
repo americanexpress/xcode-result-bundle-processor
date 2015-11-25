@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version     = XcodeResultBundleProcessor::VERSION
   spec.authors     = ['Manuel Wudka-Robles']
   spec.email       = ['mwudka@me.com']
-  spec.summary     = %q{xcode-result-bundle-processor converts Xcode test result bundles into friendy HTML reports}
+  spec.summary     = %q{xcode-result-bundle-processor converts Xcode test result bundles into friendly HTML reports}
   spec.homepage    = ''
   spec.license     = 'mit'
 
@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency('rdoc', '~> 4.2')
   spec.add_development_dependency('aruba', '~> 0.10')
   spec.add_development_dependency('rspec', '~> 3.3')
-  spec.add_development_dependency('simplecov', '~> 0.10')
+  spec.add_development_dependency('codeclimate-test-reporter', '~> 0.4')
 
   spec.add_dependency('methadone', '~> 1.9.2')
   spec.add_dependency('awesome_print', '~> 1.6')

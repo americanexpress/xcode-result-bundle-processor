@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    xcode-result-bundle-processor (0.0.1)
+    xcode-result-bundle-processor (1.0.0)
       CFPropertyList (~> 2.2)
       awesome_print (~> 1.6)
       markaby (~> 0.8)

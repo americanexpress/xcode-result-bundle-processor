@@ -12,19 +12,9 @@ pre {
 }
 
 td {
-    vertical-align: top;
-    padding: 20px;
     border: 1px solid black;
-}
-
-@keyframes grow-image {
-    from {
-        width: 200px;
-    }
-
-    to {
-        width: initial;
-    }
+    padding: 20px;
+    vertical-align: top;
 }
 
 img {

@@ -52,7 +52,7 @@ To run tests, run
 
     bundle exec rake
 
-To build the gem, fun
+To build the gem, run
     
     bundle exec rake build
     

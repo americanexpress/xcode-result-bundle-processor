@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name        = 'xcode-result-bundle-processor'
   spec.version     = XcodeResultBundleProcessor::VERSION
   spec.authors     = ['Manuel Wudka-Robles']
-  spec.email       = ['mwudka@me.com']
+  spec.email       = ['manuel.wudkarobles@aexp.com']
   spec.summary     = %q{xcode-result-bundle-processor converts Xcode test result bundles into friendly HTML reports}
   spec.homepage    = 'https://github.com/americanexpress/xcode-result-bundle-processor'
   spec.license     = 'coil'

@@ -31,12 +31,12 @@ First, run your UI tests using an invocation like this:
         -scheme 'My UI Tests' \
         -sdk iphonesimulator \
         -resultBundlePath "my_results_bundle" \
-        
+
 This will put a bunch of mystery files into `my_results_bundle`, which you can transform into un-mystery files
 via
 
-    bundle exec xcode-result-bundle-processor --save-html-report report my_results_bundle 
-    
+    bundle exec xcode-result-bundle-processor --save-html-report report my_results_bundle
+
 The report will appear in `report/index.html`
 
 ## Development
@@ -47,15 +47,15 @@ don't already have it. RVM will also handle creating a gemset.
 To update the dependencies, run
 
     bundle
-    
+
 To run tests, run
 
     bundle exec rake
 
 To build the gem, run
-    
+
     bundle exec rake build
-    
+
 To execute the tool, run
 
     bundle exec xcode-result-bundle-processor
@@ -64,10 +64,10 @@ To execute the tool, run
 
 Contributing is easy and fun! Some guidelines:
 
-* If you're making a non-trivial change, consider reaching out to Manuel the Maintainer (mwudka@me.com) for an
+* If you're making a non-trivial change, consider reaching out to Manuel the Maintainer (manuel.wudkarobles@aexp.com) for an
  architecture/implementation chat.
 * Create an issue to track your work and describe your goals
 * Branch from master and make your changes in the branch
 * Add tests for any new functionality
 * When you're happy with your changes and the builds pass, open a PR
-* If no one has addressed your PR after a day or two, prod Manuel the Maintainer (mwudka@me.com)
+* If no one has addressed your PR after a day or two, prod Manuel the Maintainer (manuel.wudkarobles@aexp.com)

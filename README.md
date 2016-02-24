@@ -4,12 +4,12 @@
 [![Gem Version](https://badge.fury.io/rb/xcode-result-bundle-processor.svg)](https://badge.fury.io/rb/xcode-result-bundle-processor)
 [![Dependency Status](https://www.versioneye.com/user/projects/565629adff016c002c001c2c/badge.svg?style=flat)](https://www.versioneye.com/user/projects/565629adff016c002c001c2c)
 
-# XcodeResultBundleProcessor
+# What is XcodeResultBundleProcessor?
 
 This tool converts into Xcode 7's machine-readable results bundle into a human-readable HTML report including
 detailed activity logs and screenshots for UI tests.
 
-## Installation
+# Installation
 
 Add this line to your application's Gemfile:
 
@@ -23,7 +23,7 @@ Or install it yourself as:
 
     $ gem install xcode-result-bundle-processor
 
-## Usage
+# Usage
 
 First, run your UI tests using an invocation like this:
 
@@ -39,7 +39,7 @@ via
 
 The report will appear in `report/index.html`
 
-## Development
+# Development
 
 If you have RVM and change to the working directory, you'll be prompted to install the needed Ruby version if you
 don't already have it. RVM will also handle creating a gemset.
@@ -60,14 +60,15 @@ To execute the tool, run
 
     bundle exec xcode-result-bundle-processor
 
-## Contributing
+# Contributing
 
-Contributing is easy and fun! Some guidelines:
+We welcome Your interest in the American Express Open Source Community on Github. Any Contributor to any Open Source Project managed by the American Express Open Source Community must accept and sign an Agreement indicating agreement to the terms below. Except for the rights granted in this Agreement to American Express and to recipients of software distributed by American Express, You reserve all right, title, and interest, if any, in and to Your Contributions. Please [fill out the Agreement](http://goo.gl/forms/mIHWH1Dcuy).
 
-* If you're making a non-trivial change, consider reaching out to Manuel the Maintainer (manuel.wudkarobles@aexp.com) for an
- architecture/implementation chat.
-* Create an issue to track your work and describe your goals
-* Branch from master and make your changes in the branch
-* Add tests for any new functionality
-* When you're happy with your changes and the builds pass, open a PR
-* If no one has addressed your PR after a day or two, prod Manuel the Maintainer (manuel.wudkarobles@aexp.com)
+# License
+
+Any contributions made under this project will be governed by the [Apache License 2.0](https://github.com/americanexpress/xcode-result-bundle-processor/blob/master/LICENSE.txt).
+
+# Code of Conduct
+
+This project adheres to the [American Express Community Guidelines](https://github.com/americanexpress/middle-manager/wiki/Code-of-Conduct).
+By participating, you are expected to honor these guidelines.

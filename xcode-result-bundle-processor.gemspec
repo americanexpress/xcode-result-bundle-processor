@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email       = ['manuel.wudkarobles@aexp.com']
   spec.summary     = %q{xcode-result-bundle-processor converts Xcode test result bundles into friendly HTML reports}
   spec.homepage    = 'https://github.com/americanexpress/xcode-result-bundle-processor'
-  spec.license     = 'coil'
+  spec.license     = 'Apache-2.0'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |file| file =~ %r{^(test|spec|features)/} }
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
